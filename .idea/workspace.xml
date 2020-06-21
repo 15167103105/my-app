@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02ddaf1-529b-474d-b2e4-ed477873b5c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/config/CHATAPI.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/friendStatus/FriendStatus.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/doc/readme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/useFriendStatus/useFriendStatus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/Index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/Index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +55,8 @@
       <workItem from="1591248554838" duration="1227000" />
       <workItem from="1591412840683" duration="2462000" />
       <workItem from="1591630333880" duration="892000" />
-      <workItem from="1591678551005" duration="1436000" />
+      <workItem from="1591678551005" duration="2506000" />
+      <workItem from="1592710111701" duration="4711000" />
     </task>
     <servers />
   </component>
