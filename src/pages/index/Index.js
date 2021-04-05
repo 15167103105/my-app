@@ -6,8 +6,6 @@ import React, { useState, useEffect } from 'react';
 export default function Example() {
     const [count, setCount] = useState(0);
     // 声明多个变量
-    const [fruit, setFruit] = useState('banana');
-    console.log('useState', useState('banana'), fruit, setFruit);
 
     // useEffect 是一个Effect Hook，给函数组件增加了操作副作用的能力，它跟class组件中的componentDidMount、componentDidUpdate、
     // componentWillUnmount具有相同的用途，只不过被合成了一个API
