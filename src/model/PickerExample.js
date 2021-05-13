@@ -9,8 +9,12 @@ export default function PickerExample() {
             age: 18,
         }
     })
+    let contextValue = {
+        appState,
+        setAppState,
+    }
     return (
-        <AppContext.Provider value={appState}>
+        <AppContext.Provider value={contextValue}>
             <FirstChild />
         </AppContext.Provider>
     )
