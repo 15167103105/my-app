@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
-import AppContext from './context';
+import React from 'react';
+import { connect } from './redux';
 
-function SecondChild() {
-  let contextValue = useContext(AppContext);
+const SecondChild = connect(({state}) => {
   return (
     <div>
       <div>SecondChild</div>
       <h1>
-        contextValue: {contextValue.appState.user.age}
+        age: {state.user.age}
       </h1>
     </div>
   )
-}
+})
 
 export default SecondChild;

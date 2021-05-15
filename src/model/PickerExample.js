@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FirstChild from './FirstChild';
+import SecondChild from './secondChild';
 import AppContext from './context';
+import { store } from './redux';
 
 export default function PickerExample() {
-    const [appState, setAppState] = useState({
-        user: {
-            name: 'htt',
-            age: 18,
-        }
-    })
-    let contextValue = {
-        appState,
-        setAppState,
-    }
     return (
-        <AppContext.Provider value={contextValue}>
+        <AppContext.Provider value={store}>
             <FirstChild />
+            <SecondChild />
         </AppContext.Provider>
     )
 }
