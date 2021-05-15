@@ -10,6 +10,16 @@ export const store = {
   },
   setState(newState) {
     store.state = newState;
+    store.listeners.map(fn => fn(store.state))
+  },
+  listeners: [],
+  // 订阅
+  subscribe(fn){
+    store.listeners.push(fn);
+    return () => {
+      const index = store.listeners.indexOf(fn);
+      store.listeners.splice(index, 1);
+    }
   },
 };
 
@@ -33,8 +43,12 @@ export const connect = (Component) => {
       setState(reducer(state, action));
       update({});
     };
-    // useEffect(() => {
-    // }, []);
+    // 有状态变化时，告诉所有订阅者变化
+    useEffect(() => {
+      store.subscribe(() => {
+        update({})
+      });
+    }, []);
     return <Component {...props} dispatch={dispatch} state={state} />
   }
 }

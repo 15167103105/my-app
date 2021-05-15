@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from './redux';
 
 const FirstChild = connect(({dispatch, state, children}) => {
-  console.log('state', state);
 
   return (
     <div>
