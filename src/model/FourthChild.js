@@ -1,34 +1,30 @@
 import React from 'react';
 import { connect } from './redux';
+import { connectToUser } from '../redux/connect/connectToUser';
 
-const FirstChild = connect(state => {
+//  简化写法
+const userSelector = state => {
   return {
     user: state.user,
   }
-}, (dispatch) => {
+};
+
+const userDispatch = (dispatch) => {
   return {
     updateUser: (attrs) => dispatch({
       action: 'update',
       payload: attrs,
     })
   }
-})(({updateUser, user}) => {
+};
+
+// const connectToUser = connect(userSelector, userDispatch);
+
+const ForthChild = connectToUser(({updateUser, user}) => {
   return (
     <div>
-      <div>FirstChild</div>
-      {/* <button
-        onClick={() => {
-          dispatch({
-            action: 'update',
-            payload: {
-              user: {
-                ...user,
-                name: 'htt1111',
-              }
-            }
-          })
-        }}
-      >修改name信息</button> */}
+      <br />
+      <div>FourthChild</div>
       <button
         onClick={() => {
           updateUser({
@@ -46,4 +42,4 @@ const FirstChild = connect(state => {
   )
 })
 
-export default FirstChild
+export default ForthChild;

@@ -6,7 +6,6 @@ const ThirdChild = connect(state => {
     group: state.group
   }
 })(({group}) => {
-  console.log('ThirdChild');
   return (
     <div>
       <div>ThirdChild</div>

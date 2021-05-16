@@ -23,6 +23,9 @@ const SecondChild = connect(state => {
         }}
       >修改age信息</button>
       <h1>
+        name: {user.name}
+      </h1>
+      <h1>
         age: {user.age}
       </h1>
     </div>

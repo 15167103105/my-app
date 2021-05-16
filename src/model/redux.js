@@ -46,7 +46,7 @@ const changed = (oldState, newState) => {
   return changed;
 }
 
-export const connect = (selector) => (Component) => {
+export const connect = (selector, mapdispatchToProps) => (Component) => {
   return (props) => {
     const {state, setState} = useContext(AppContext);
     const [, update] = useState({});
@@ -55,6 +55,7 @@ export const connect = (selector) => (Component) => {
       setState(reducer(state, action));
       update({});
     };
+    const dispatchers = mapdispatchToProps ? mapdispatchToProps(dispatch) : dispatch;
     // 有状态变化时，告诉所有订阅者变化
     useEffect(() => {
       const unsubscribe = store.subscribe(() => {
@@ -66,6 +67,6 @@ export const connect = (selector) => (Component) => {
       // 注意：这里最好取消订阅，否则在selector变化时会出现重复订阅
       return unsubscribe;
     }, [selector]);
-    return <Component {...props} {...data} dispatch={dispatch} />
+    return <Component {...props} {...data} {...dispatchers} dispatch={dispatch} />
   }
 }
