@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from './redux';
 
-const FirstChild = connect(({dispatch, state, children}) => {
+const FirstChild = connect(state => {
+  return {
+    user: state.user,
+  }
+})(({dispatch, user}) => {
 
   return (
     <div>
@@ -20,7 +24,7 @@ const FirstChild = connect(({dispatch, state, children}) => {
         }}
       >修改name信息</button>
       <h1>
-        name: {state.user.name}
+        name: {user.name}
       </h1>
     </div>
   )
