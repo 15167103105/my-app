@@ -40,7 +40,24 @@ const store = {
   },
 };
 
-const dispatch = store.dispatch;
+let dispatch = store.dispatch;
+
+const prevDispatch = dispatch;
+
+// const action = (dispatch) => {
+//   dispatch(fn);
+// }
+
+// 支持处理异步action
+dispatch = (action) => {
+  // 异步action，函数
+  if (action instanceof Function) {
+    action(dispatch);
+  } else {
+    // 对象 {type: '', payload}
+    prevDispatch(action);
+  }
+}
 
 const changed = (oldState, newState) => {
   let changed = false;
