@@ -1,14 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AppContext from './context';
 
-export const store = {
-  state: {
-    user: {
-      name: 'htt',
-      age: 18,
-    },
-    group: '前端组',
+export const createStore = (_reducer, initState) => {
+  store.state = initState;
+  store.reducer = reducer;
+  return store;
+}
+
+export const initState = {
+  user: {
+    name: 'htt',
+    age: 18,
   },
+  group: '前端组',
+};
+
+const store = {
+  state: undefined,
+  reducer: undefined,
   setState(newState) {
     store.state = newState;
     store.listeners.map(fn => fn(store.state))
@@ -24,7 +33,7 @@ export const store = {
   },
 };
 
-export const reducer = (state, {action, payload}) => {
+export let reducer = (state = initState, {action, payload}) => {
   switch(action) {
     case 'update':
       return {
@@ -52,7 +61,7 @@ export const connect = (selector, mapdispatchToProps) => (Component) => {
     const [, update] = useState({});
     const data = selector ? selector(state) : {state};
     const dispatch = (action) => {
-      setState(reducer(state, action));
+      setState(store.reducer(state, action));
       update({});
     };
     const dispatchers = mapdispatchToProps ? mapdispatchToProps(dispatch) : dispatch;
@@ -69,4 +78,13 @@ export const connect = (selector, mapdispatchToProps) => (Component) => {
     }, [selector]);
     return <Component {...props} {...data} {...dispatchers} dispatch={dispatch} />
   }
+}
+
+
+export const Provider = ({ store, children}) => {
+  return (
+    <AppContext.Provider value={store}>
+      {children}
+    </AppContext.Provider>
+  )
 }
