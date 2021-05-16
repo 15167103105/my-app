@@ -59,6 +59,23 @@ dispatch = (action) => {
   }
 }
 
+// 支持payload为promise
+const prevDispatch2 = dispatch;
+
+dispatch = (action) => {
+  if (action.payload instanceof Promise) {
+    action.payload.then(data => {
+      // 用dispatch 而不是prevDispatch2，防止返回值data还是一个promise
+      dispatch({
+        ...action,
+        payload: data,
+      })
+    })
+  } else {
+    prevDispatch2(action)
+  }
+}
+
 const changed = (oldState, newState) => {
   let changed = false;
   for (let key in oldState) {

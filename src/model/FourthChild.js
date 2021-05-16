@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from './redux';
 import { connectToUser } from '../redux/connect/connectToUser';
+import resolve from 'resolve';
 
 //  简化写法
 const userSelector = state => {
@@ -39,10 +40,35 @@ const fetchUser = (updateUser) => {
     updateUser({
       user: {
         age: 18,
-        name: '1s后htt',
+        name: '异步函数action htt',
       }
     });
   }, 1000);
+}
+
+// const fetchPromise = () => {
+//   return ajax('/user').then(response => response.data);
+// }
+
+const fetchPromise = () => {
+  return new Promise((resolve, reject) => {
+    resolve({
+      user: {
+        age: 1,
+        name: 'htt promise'
+      },
+    });
+    setTimeout(() => {
+      resolve({
+        data: {
+          user: {
+            age: 1,
+            name: 'htt promise'
+          },
+        },
+      });
+    }, 1000);
+  })
 }
 
 const ForthChild = connectToUser(({updateUser, user, dispatch}) => {
@@ -66,11 +92,26 @@ const ForthChild = connectToUser(({updateUser, user, dispatch}) => {
       <button
         onClick={() => {
           // 异步action如果不做处理，
-          // fetchUser(updateUser)
+          fetchUser(updateUser)
+        }}
+      >函数action</button>
+      <button
+        onClick={() => {
           // dispatch(fn)
           dispatch(fetchUser1);
         }}
       >异步修改</button>
+      <button
+        onClick={() => {
+          // 当payload为promise
+          dispatch({
+            action: 'update',
+            payload: fetchPromise(),
+          })
+        }}
+      >
+        异步promise
+      </button>
     </div>
   )
 })
