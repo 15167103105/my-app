@@ -6,7 +6,7 @@ const FirstChild = connect(state => {
     user: state.user,
   }
 })(({dispatch, user}) => {
-
+  console.log('FirstChild');
   return (
     <div>
       <div>FirstChild</div>
@@ -16,8 +16,8 @@ const FirstChild = connect(state => {
             action: 'update',
             payload: {
               user: {
+                ...user,
                 name: 'htt1111',
-                age: 180,
               }
             }
           })
