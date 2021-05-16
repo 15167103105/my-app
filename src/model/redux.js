@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AppContext from './context';
 
+let state = undefined;
+let reducer = undefined;
+
 export const createStore = (_reducer, initState) => {
-  store.state = initState;
-  store.reducer = reducer;
+  state = initState;
+  reducer = _reducer;
   return store;
 }
 
@@ -16,11 +19,12 @@ export const initState = {
 };
 
 const store = {
-  state: undefined,
-  reducer: undefined,
+  getState() {
+    return state;
+  },
   setState(newState) {
-    store.state = newState;
-    store.listeners.map(fn => fn(store.state))
+    state = newState;
+    store.listeners.map(fn => fn(state))
   },
   listeners: [],
   // 订阅
@@ -32,18 +36,6 @@ const store = {
     }
   },
 };
-
-export let reducer = (state = initState, {action, payload}) => {
-  switch(action) {
-    case 'update':
-      return {
-        ...state,
-        ...payload,
-      };
-    default:
-      return state;
-  }
-}
 
 const changed = (oldState, newState) => {
   let changed = false;
@@ -57,18 +49,18 @@ const changed = (oldState, newState) => {
 
 export const connect = (selector, mapdispatchToProps) => (Component) => {
   return (props) => {
-    const {state, setState} = useContext(AppContext);
+    const {setState} = useContext(AppContext);
     const [, update] = useState({});
     const data = selector ? selector(state) : {state};
     const dispatch = (action) => {
-      setState(store.reducer(state, action));
+      setState(reducer(state, action));
       update({});
     };
     const dispatchers = mapdispatchToProps ? mapdispatchToProps(dispatch) : dispatch;
     // 有状态变化时，告诉所有订阅者变化
     useEffect(() => {
       const unsubscribe = store.subscribe(() => {
-        const newState = selector ? selector(store.state) : { state: store.state };
+        const newState = selector ? selector(state) : { state };
         if (changed(data, newState)) {
           update({});
         }
